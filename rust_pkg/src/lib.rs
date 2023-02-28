@@ -2,10 +2,15 @@ use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 extern {
-    pub fn alert(s: &str);
+    #[wasm_bindgen(js_namespace = console)]
+    fn log(msg: &str);
+}
+
+macro_rules! log {
+    ($($t:tt)*) => (log(&format!($($t)*)))
 }
 
 #[wasm_bindgen]
 pub fn greet(name: &str) {
-    alert(&format!("Hello, {}!", name));
+    log!("Hello {}! Log from rust code ", name);
 }
